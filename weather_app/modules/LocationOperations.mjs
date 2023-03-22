@@ -35,7 +35,7 @@ export const getWeatherData = (location) => {
 };
 
 export const addLocation = (location, current) => {
-    console.log(location,current);
+  console.log(location, current);
   const data = readFileData();
   let isPresent = false;
   data.forEach((item) => {
@@ -88,4 +88,3 @@ export const getAllCities = () => {
   });
   return cities;
 };
-

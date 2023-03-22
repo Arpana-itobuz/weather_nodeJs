@@ -43,15 +43,3 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(5000);
-
-// console.log(getWeatherData("kolkata"));
-
-// const loc = { country: "India", name: "Sarmera", region: "Bihar" };
-// const current = {
-//   feelslikeC: 32,
-//   tempC: 30,
-//   cloud: 100,
-// };
-
-// // addLocation(loc, current);
-// console.log(getAllCities());
