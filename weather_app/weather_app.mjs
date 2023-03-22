@@ -5,15 +5,53 @@ import {
   deleteLocation,
   getAllCities,
 } from "./modules/LocationOperations.mjs";
+import http from "http";
+import url from "url";
 
-console.log(getWeatherData("kolkata"));
+function getDataFromRoutes(req, res) {
+  const parsedUrl = url.parse(req.url, true);
+  const path = parsedUrl.pathname;
+  if (path === "/get-weather") {
+    let q = parsedUrl.query;
 
-const loc = { country: "India", name: "Sarmera", region: "Bihar" };
-const current = {
-  feelslikeC: 32,
-  tempC: 30,
-  cloud: 100,
-};
+    if (q.city !== undefined) {
+      let data = getWeatherData(q.city);
+      if (data != undefined) {
+        res.write(JSON.stringify(data));
+        res.end();
+      } else {
+        res.write(JSON.stringify({ message: "city not found" }));
+        res.end();
+      }
+    }
+  }
+  if (path === "/get-all-cities") {
+    res.write(JSON.stringify(getAllCities()));
+    res.end();
+  }
+}
 
-// addLocation(loc, current);
-console.log(getAllCities());
+const server = http.createServer((req, res) => {
+  try {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.writeHead({ "Content-Type": "text/plain" });
+
+    getDataFromRoutes(req, res);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+server.listen(5000);
+
+// console.log(getWeatherData("kolkata"));
+
+// const loc = { country: "India", name: "Sarmera", region: "Bihar" };
+// const current = {
+//   feelslikeC: 32,
+//   tempC: 30,
+//   cloud: 100,
+// };
+
+// // addLocation(loc, current);
+// console.log(getAllCities());
