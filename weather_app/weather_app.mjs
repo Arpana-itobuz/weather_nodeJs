@@ -16,7 +16,7 @@ function getDataFromRoutes(req, res) {
 
     if (q.city !== undefined) {
       let data = getWeatherData(q.city);
-      if (data != undefined) {
+      if (data !== undefined) {
         res.write(JSON.stringify(data));
         res.end();
       } else {
@@ -34,7 +34,7 @@ function getDataFromRoutes(req, res) {
 const server = http.createServer((req, res) => {
   try {
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.writeHead({ "Content-Type": "text/plain" });
+    res.writeHead(200, { "Content-Type": "text/plain" });
 
     getDataFromRoutes(req, res);
   } catch (err) {
